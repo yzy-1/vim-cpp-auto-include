@@ -1,15 +1,15 @@
 " Copyright (C) 2012 WU Jun <quark@zju.edu.cn>
-" 
+"
 " Permission is hereby granted, free of charge, to any person obtaining a copy
 " of this software and associated documentation files (the "Software"), to deal
 " in the Software without restriction, including without limitation the rights
 " to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 " copies of the Software, and to permit persons to whom the Software is
 " furnished to do so, subject to the following conditions:
-" 
+"
 " The above copyright notice and this permission notice shall be included in
 " all copies or substantial portions of the Software.
-" 
+"
 " THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 " IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,7 +47,7 @@ module VIM
     # if the line after #i != content,
     # append content after line #i
     def append(i, content)
-      return false if ($curbuf.length >= i+1 && $curbuf[i+1] == content) 
+      return false if ($curbuf.length >= i+1 && $curbuf[i+1] == content)
       cursor = $curwin.cursor
       $curbuf.append(i, content)
       $curwin.cursor = [cursor.first+1,cursor.last] if cursor.first >= i
@@ -110,7 +110,7 @@ module CppAutoInclude
     ['utility',        true , true , R[T['pair'], F['make_pair']] ],
   ]
 
-  USING_STD       = 'using namespace std;'
+  # USING_STD       = 'using namespace std;'
 
   # do nothing if lines.count > LINES_THRESHOLD
   LINES_THRESHOLD = 1000
@@ -139,7 +139,7 @@ module CppAutoInclude
         HEADER_STD_COMPLETE_REGEX.each do |header, std, complete, regex|
           has_header  = includes.detect { |l| l.first.include? "<#{header}>" }
           has_keyword = (has_header && !complete) || (content =~ regex)
-          use_std ||= std && has_keyword
+          # use_std ||= std && has_keyword
 
           if has_keyword && !has_header
             VIM::append(includes.last.last, "#include <#{header}>")
@@ -150,7 +150,7 @@ module CppAutoInclude
           end
         end
 
-        # append empty line to last #include 
+        # append empty line to last #include
         # or remove top empty lines if no #include
         if includes.last.last == 0
           VIM::remove(1, '')
@@ -158,16 +158,16 @@ module CppAutoInclude
           VIM::append(includes.last.last, '')
         end
 
-        # add / remove 'using namespace std'
-        has_std = content[USING_STD]
+        # # add / remove 'using namespace std'
+        # has_std = content[USING_STD]
 
-        if use_std && !has_std && !includes.empty?
-          VIM::append(includes.last.last+1, USING_STD) 
-          VIM::append(includes.last.last+2, '')
-        elsif !use_std && has_std
-          VIM::remove(nil, USING_STD)
-          VIM::remove(1, '') if includes.last.last == 0
-        end
+        # if use_std && !has_std && !includes.empty?
+        #   VIM::append(includes.last.last+1, USING_STD)
+        #   VIM::append(includes.last.last+2, '')
+        # elsif !use_std && has_std
+        #   VIM::remove(nil, USING_STD)
+        #   VIM::remove(1, '') if includes.last.last == 0
+        # end
       rescue => ex
         # VIM hide backtrace information by default, re-raise with backtrace
         raise RuntimeError.new("#{ex.message}: #{ex.backtrace}")
