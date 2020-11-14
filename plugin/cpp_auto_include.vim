@@ -108,7 +108,7 @@ module CppAutoInclude
     ['memory'            , true , true , R[T['(shared|weak|unique)_ptr', 'make_shared']] ],
     ['mutex'             , true , true , R[C['lock_guard', 'unique_lock'], F['try_lock', 'lock', 'call_once'], T['(?:recursive_)?(?:timed_)?mutex', 'defer_lock', 'try_to_lock', 'adopt_lock']] ],
     ['new'               , true , true , R[F['set_new_handler'], C['nothrow']] ],
-    ['numeric'           , true , true , R[F['partial_sum', 'accumulate', 'adjacent_difference', 'inner_product']] ],
+    ['numeric'           , true , true , R[F['partial_sum', 'accumulate', 'adjacent_difference', 'inner_product', 'gcd', 'lcm']] ],
     ['queue'             , true , true , R[T['queue','priority_queue']] ],
     ['regex'             , true , true , R[T['regex'], F['regex_(match|search|replace)']] ],
     ['ratio'             , true , true , R[T['ratio']] ],
